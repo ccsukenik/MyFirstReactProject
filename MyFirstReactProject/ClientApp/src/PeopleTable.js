@@ -6,65 +6,47 @@ class PeopleTable extends React.Component {
     
         state = {
             people: [],
-            person: {
-                firstName: '',
-                lastName: '',
-                age: '',
-            }
+            person: {}
         }
         
-        onTextChange = e => {
-            const copy = { ...this.state.person };
-            copy[e.target.name] = e.target.value;
-            this.setState({ person: copy });
+        onFirstNameChange = e => {
+            const { lastName, age } = this.state.person;
+            this.setState({ person: {firstName: e.target.value, lastName, age} });
+        }
+
+        onLastNameChange = e => {
+            const { firstName, age } = this.state.person;
+            this.setState({person: {firstName, lastName: e.target.value, age} })
+        }
+       
+        onAgeChange = e => {
+            const { firstName, lastName } = this.state.person;
+            this.setState({person: {firstName, lastName, age: e.target.value} })
         }
 
         onAddClick = () => {
-            const people = [...this.state.people, this.state.person];
-            this.setState = ({
-                people,
-                person: {
-                firstName: '',
-                lastName: '',
-                age: '',
-                }
+            const { people, person } = this.state;
+            const copy = [...people, person];
+            this.setState = ({people: copy,
+                person: { firstName: '', lastName: '', age: '', }
             })
         }
 
         onClearClick = () => {
             this.setState({ people: [] });
         }
-
-        generateBody = () => {
-            if(this.state.people.length === 0){
-                return <h1>Add people now!!!</h1>;
-            }
-            
-            return (<table class="table table-hover table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Age</th>
-                            </tr>
-                        </thead>                  
-                        <tbody>
-                            {this.state.people.map((p,i) => <PersonRow key={i} person={p} />)};
-                        </tbody>
-                    </table>);
-    }
-
+        
         render() {
         return (         
             <div className="container" style={{ marginTop: 60 }}>
             <PersonForm
                 person={this.state.person}
-                onFirstNameChange={this.onTextChange}
-                onLastNameChange={this.onTextChange}
-                onAgeChange={this.onTextChange}
+                onFirstNameChange={this.onFirstNameChange}
+                onLastNameChange={this.onLastNameChange}
+                onAgeChange={this.onAgeChange}
                 onAddClick={this.onAddClick}
                 onClearClick={this.onClearClick} />
-            {this.generateBody()}           
+            <PersonRow people={ this.setState.people } />           
         </div>    
         )
     }

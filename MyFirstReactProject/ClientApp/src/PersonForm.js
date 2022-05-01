@@ -2,9 +2,9 @@ import React from 'react';
 
 class PersonForm extends React.Component{
      render() {
-        const { firstName, lastName, age } = this.props;
-        const { onFirstNameChange, onLastNameChange, onAgeChange, onAddClick, onClearClick } = this.props;
-
+        const { onFirstNameChange, onLastNameChange, onAgeChange, onAddClick, onClearClick, person } = this.props;
+        const { firstName, lastName, age } = person;
+        
         return (
 <div className="row jumbotron">
     <div className="col-md-3">
